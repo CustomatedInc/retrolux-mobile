@@ -1,0 +1,33 @@
+
+// include ':realm'
+// project(':realm').projectDir = new File(rootProject.projectDir, '../node_modules/realm/android')
+// include ':react-native-svg'
+// project(':react-native-svg').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-svg/android')
+// include ':react-native-image-resizer'
+// project(':react-native-image-resizer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-resizer/android')
+// include ':react-native-image-picker'
+// project(':react-native-image-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-picker/android')
+// include ':react-native-device-info'
+// project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
+// include ':react-native-keep-awake'
+// project(':react-native-keep-awake').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-keep-awake/android')
+// include ':react-native-fs'
+// project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
+// include ':react-native-uuid-generator'
+// project(':react-native-uuid-generator').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-uuid-generator/android')
+// include ':react-native-camera'
+// project(':react-native-camera').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-camera/android')
+// include ':react-native-orientation'
+// project(':react-native-orientation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-orientation/android')
+// include ':react-native-vector-icons'
+// project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+
+
+
+
+pluginManagement { includeBuild("../node_modules/@react-native/gradle-plugin") }
+plugins { id("com.facebook.react.settings") }
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
+rootProject.name = 'RetroluxMobile'
+include ':app'
+includeBuild('../node_modules/@react-native/gradle-plugin')

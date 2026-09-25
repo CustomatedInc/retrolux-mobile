@@ -1,0 +1,13 @@
+Date - 28/01/2025
+
+Following Library a
+
+Date 10/02/2025
+
+1. App Update Message reads incorrectly - RCD-3919 (Fixed)
+2. Details screen is not redirecting back to area screen after changes are made/added. - RCD-3918 (Fixed) 
+3. When typing in data into the description field of a photo, application will crash. (Fixed)
+4. Error when taking first photo in application - RCD-3911
+
+
+https://i.diawi.com/GkPRGz

@@ -1,0 +1,22 @@
+export const testBlendedRateSchedule = {
+  mobile_id: 1,
+  active: true,
+  edited: false,
+  kwh_cost: '0.25',
+  rate_type: 'blended',
+  rate_escalator: '100',
+  rate_customer: null,
+  demand_utilization: null, // only one that is a int
+  kw_demand_cost: null,
+  kwh_cost_simple: null,
+  created_at: new Date(),
+  inactive_at: null,
+  internal_notes: null,
+  name: 'Blended Rate Schedule',
+  notes: null,
+  project_id: 1,
+  mobile_project_id: 1,
+  uuid: "da5d28d8-5221-43c7-fff3-21a737c8334e",
+  server_id: 1,
+  updated_at: new Date(),
+}

@@ -1,0 +1,128 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t Signiant"
+
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  # PRE #######################################################################
+
+  before_all do
+    # Slack incoming-webhook URL is a secret — provide it via the environment, never commit it.
+    ENV['SLACK_URL'] = ENV['RETROLUX_SLACK_WEBHOOK_URL']
+    ENV['FASTLANE_HIDE_TIMESTAMP'] = 'true' #comment out to see timestamps
+
+    @username = 'develop@retrolux.com'
+
+    env_confirmation = prompt(text: 'Did you manually change the environment valiables for this lane?', boolean: true)
+    UI.user_error!('Exiting for unconfirmed env variables') unless env_confirmation
+
+    branch_confirmation = prompt(text: "Do you want to build from the branch #{git_branch}? ", boolean: true)
+    UI.user_error!('Exiting for unconfirmed branch') unless branch_confirmation
+    # ensure_git_status_clean
+  end
+
+  # PUBLIC LANES ##############################################################
+
+  desc 'Build and release a brightside app pointing to brightside.retrolux.com'
+  lane :brightside do |options|
+    @scheme = 'RetroluxBrightside'
+    @identifier = 'com.retrolux.brightside'
+
+    itc
+  end
+
+  desc 'Build and release a beta app pointing to dev.retrolux.com'
+  lane :dev do |options|
+    @scheme = 'RetroluxDev'
+    @identifier = 'com.retrolux.dev'
+
+    itc
+  end
+
+  desc 'Build and release a beta app pointing to app.retrolux.com'
+  lane :production do |options|
+    @scheme = 'RetroluxMobile'
+    @identifier = 'com.retrolux.app'
+
+    itc
+  end
+
+  # PRIVATE LANES #############################################################
+
+  private_lane :itc do |options|
+    get_certs_and_profile
+    handle_version_and_build_numbers
+    build_and_upload
+  end
+
+  private_lane :handle_version_and_build_numbers do |options|
+    current_version = get_version_number
+    current_build = get_build_number
+
+    increment_version = prompt(text: "Do you want to increment the version number? #{current_version}: ", boolean: true)
+
+    if increment_version
+      new_version = increment_version_number
+      new_build = increment_build_number(build_number: 1)
+    else
+      new_version = current_version
+      new_build = increment_build_number
+    end
+
+    commit_version_bump(
+      xcodeproj:'RetroluxMobile.xcodeproj',
+      message: "Update build - #{@scheme} v#{new_version}(#{new_build})"
+    )
+  end
+
+  private_lane :get_certs_and_profile do |options|
+    get_certificates(
+      username: @username
+    )
+
+    get_provisioning_profile(
+      username: @username,
+      app_identifier: @identifier
+    )
+  end
+
+  private_lane :build_and_upload do |options|
+    puts options
+    build_ios_app(
+      scheme: @scheme,
+      project: './RetroluxMobile.xcodeproj',
+      suppress_xcode_output: true #comment out to see build failures
+    )
+
+    upload_to_testflight(
+      skip_submission: true,
+      username: @username,
+      wait_for_uploaded_build: true
+    )
+  end
+
+  # POST ######################################################################
+
+  after_all do |lane|
+    File.delete('../RetroluxMobile.app.dSYM.zip')
+
+    build = Actions.lane_context[Actions::SharedValues::BUILD_NUMBER]
+    version = Actions.lane_context[SharedValues::VERSION_NUMBER]
+
+    app_info = "#{@scheme} #{version}(#{build})"
+    slack(message: "#{app_info} is done processing", link_names: true,  default_payloads: [])
+  end
+end

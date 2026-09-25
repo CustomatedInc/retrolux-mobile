@@ -1,0 +1,56 @@
+Retrolux Mobile
+Copyright (C) 2026 Retrolux
+
+This program is free software licensed under the GNU Affero General Public
+License, version 3 or later. See the LICENSE file for the full license text.
+
+--------------------------------------------------------------------------------
+Third-party components
+--------------------------------------------------------------------------------
+
+This application incorporates and depends on third-party software that remains
+under its own license. Those licenses are compatible with the AGPL-3.0, but they
+are not superseded by it; each component retains its original copyright and terms.
+
+Notable components include:
+
+  - React Native ........................... MIT License
+  - React .................................. MIT License
+  - Redux and redux-thunk .................. MIT License
+  - Realm (realm / realm-js) ............... Apache-2.0 License
+  - npm packages (see package.json) ........ MIT / BSD / Apache-2.0
+  - CocoaPods dependencies (see ios/Podfile) . various permissive licenses
+
+For the authoritative, complete list of dependencies and their licenses, see
+package.json / package-lock.json (JavaScript) and ios/Podfile.lock (native iOS),
+and generate a report with a license auditing tool (for example
+`license-checker` for npm packages).
+
+The full text of each third-party license is available in the corresponding
+package distribution. Nothing in this NOTICE grants rights beyond those in the
+applicable third-party license or the project's LICENSE.
+
+Note on AGPL Section 13: a mobile application that runs locally on a device is
+generally not "accessed remotely over a network" in the sense of Section 13, so
+no in-app source-offer is strictly required for the client itself. If a future
+version exposes network-interactive functionality to remote users, add a visible
+source-code offer (for example in an in-app "Open Source Licenses" screen).
+
+--------------------------------------------------------------------------------
+Patent notice
+--------------------------------------------------------------------------------
+
+Streamlinx has notified Retrolux of issued patents containing claims that
+Streamlinx believes may cover aspects of the Retrolux software. Retrolux takes
+no position regarding the validity, scope, or enforceability of these claims,
+and makes no representation or warranty that this codebase (in its current
+state or through subsequent modifications) is free from patent infringement.
+Users and contributors assume all risks associated with the use or modification
+of this code.
+
+The referenced issued patents include:
+
+  - US 12307398 B2
+  - US 12265937 B2
+  - US 11676106 B2
+  - US 11402415 B2

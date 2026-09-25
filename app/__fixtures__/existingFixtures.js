@@ -1,0 +1,17 @@
+export const testExistingFixture = {
+  area_id: 14,
+  audit_complete: false,
+  calc_ready: null,
+  custom_attributes: { attribute_one: null, attribute_two: 1 },
+  description: "description",
+  edited: false,
+  existing_lighting_id: 2,
+  mobile_area_id: 14,
+  mobile_existing_lighting_id: 2,
+  mobile_id: 1,
+  mobile_operating_schedule_id: 3,
+  name: "Test Fixture",
+  notes: "notes",
+  operating_schedule_id: null,
+  server_id: 1,
+}
